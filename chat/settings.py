@@ -11,16 +11,22 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+from os import path
+
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file
+environ.Env.read_env(path.join(BASE_DIR, 'env/.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)rem5b&!)3dgaiwdrnoo9u0*#3=4_++b)nlfx!f8nl#g5nb&v!'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,8 +80,12 @@ WSGI_APPLICATION = 'chat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('PG_DB_NAME'),
+        'USER': env('PG_DB_USER'),
+        'PASSWORD': env('PG_DB_PASSWORD'),
+        'HOST': env('PG_DB_HOST'),
+        'PORT': env('PG_DB_PORT')
     }
 }
 
