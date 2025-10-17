@@ -1,0 +1,36 @@
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pakzad.business@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: postgres1234567890
+    ports:
+      - 15432:80
+    networks:
+      - pg_network
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres:17
+      POSTGRES_PASSWORD: postgres
+      TZ: Asia/Tehran
+    ports:
+      - 5432:5432
+    networks:
+      - pg_network
+    volumes:
+      - pgadmin_data:/var/lib/postgresql/data
+
+volumes:
+  pgadmin_data:
+
+networks:
+  pg_network:
+    external: true
