@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import environ
 from os import path
+from datetime import timedelta
 
 env = environ.Env()
 
@@ -62,7 +63,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'core.middleware.CurrentUserMiddleware.CurrentUserMiddleware',
 ]
 
 ROOT_URLCONF = 'chat.urls'
@@ -150,7 +150,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-  "TOKEN_OBTAIN_SERIALIZER": "core.serializers.MyTokenObtainPairSerializer",
+    "TOKEN_OBTAIN_SERIALIZER": "core.serializers.MyTokenObtainPairSerializer",
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60) if DEBUG is True else timedelta(minutes=5),
 }
 
 SPECTACULAR_SETTINGS = {

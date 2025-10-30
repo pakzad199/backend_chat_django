@@ -1,9 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from core.views import UserViewSet
+from room.views import RoomViewSet
 
 router = DefaultRouter()
-router.register(r"users", UserViewSet, basename="user")
+router.register(r"rooms", RoomViewSet, basename="room")
 
 urlpatterns = [
     path("api/", include(router.urls)),
