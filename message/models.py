@@ -9,7 +9,7 @@ class Message(BaseModel):
     sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
     content = models.TextField(blank=True)
     edited = models.BooleanField(default=False)
-    is_deleted = models.BooleanField(default=False)
+    deleted_at = models.DateTimeField(null=True)
 
     class Meta:
         ordering = ['-created']
