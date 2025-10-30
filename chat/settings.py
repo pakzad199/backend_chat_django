@@ -152,6 +152,8 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "TOKEN_OBTAIN_SERIALIZER": "core.serializers.MyTokenObtainPairSerializer",
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60) if DEBUG is True else timedelta(minutes=5),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
 }
 
 SPECTACULAR_SETTINGS = {
