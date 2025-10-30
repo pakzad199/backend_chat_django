@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from message.models import Message
+from message.models import Message, Attachment
 from room.models import Room
 from core.serializers import UserSerializer
+from core.validators import validate_file as attachment_validate_file
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -44,3 +45,22 @@ class MessageSerializer(serializers.ModelSerializer):
         instance.deleted_at = True
         instance.save()
         return instance
+
+class AttachmentSerializer(serializers.ModelSerializer):
+    message = MessageSerializer(read_only=True)
+    uploaded_by = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Attachment
+        fields = ['id', 'message', 'file', 'uploaded_by', 'created']
+        read_only_fields = ['id', 'message', 'uploaded_by', 'created']
+
+    def get_uploaded_by(self, obj: Attachment):
+        return obj.message.sender.username
+
+    def validate_file(self, file):
+        attachment_validate_file(file)
+        return file
+
+    def create(self, validated_data):
+        return Attachment.objects.create(**validated_data)

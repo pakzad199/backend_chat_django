@@ -145,6 +145,299 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/rooms/{room_pk}/messages/:
+    get:
+      operationId: rooms_messages_list
+      parameters:
+      - in: path
+        name: room_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - rooms
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
+          description: ''
+    post:
+      operationId: rooms_messages_create
+      parameters:
+      - in: path
+        name: room_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - rooms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Message'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Message'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: ''
+  /api/rooms/{room_pk}/messages/{message_pk}/attachments/:
+    get:
+      operationId: rooms_messages_attachments_list
+      parameters:
+      - in: path
+        name: message_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: room_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - rooms
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+          description: ''
+    post:
+      operationId: rooms_messages_attachments_create
+      parameters:
+      - in: path
+        name: message_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: room_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - rooms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+          description: ''
+  /api/rooms/{room_pk}/messages/{message_pk}/attachments/{id}/:
+    get:
+      operationId: rooms_messages_attachments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this attachment.
+        required: true
+      - in: path
+        name: message_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: room_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - rooms
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+          description: ''
+    delete:
+      operationId: rooms_messages_attachments_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this attachment.
+        required: true
+      - in: path
+        name: message_pk
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: room_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - rooms
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/rooms/{room_pk}/messages/{id}/:
+    get:
+      operationId: rooms_messages_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this message.
+        required: true
+      - in: path
+        name: room_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - rooms
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: ''
+    put:
+      operationId: rooms_messages_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this message.
+        required: true
+      - in: path
+        name: room_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - rooms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Message'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Message'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: ''
+    patch:
+      operationId: rooms_messages_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this message.
+        required: true
+      - in: path
+        name: room_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - rooms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedMessage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedMessage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedMessage'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+          description: ''
+    delete:
+      operationId: rooms_messages_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this message.
+        required: true
+      - in: path
+        name: room_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - rooms
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/token/:
     post:
       operationId: token_create
@@ -446,6 +739,70 @@ paths:
           description: ''
 components:
   schemas:
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        message:
+          allOf:
+          - $ref: '#/components/schemas/Message'
+          readOnly: true
+        file:
+          type: string
+          format: uri
+        uploaded_by:
+          type: string
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created
+      - file
+      - id
+      - message
+      - uploaded_by
+    Message:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        room:
+          type: integer
+        sender:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        content:
+          type: string
+        edited:
+          type: boolean
+          readOnly: true
+        deleted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        modified:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created
+      - deleted_at
+      - edited
+      - id
+      - modified
+      - room
+      - sender
     MyTokenObtainPair:
       type: object
       properties:
@@ -458,6 +815,36 @@ components:
       required:
       - password
       - username
+    PatchedMessage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        room:
+          type: integer
+        sender:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        content:
+          type: string
+        edited:
+          type: boolean
+          readOnly: true
+        deleted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        modified:
+          type: string
+          format: date-time
+          readOnly: true
     PatchedRoom:
       type: object
       properties:
@@ -547,7 +934,6 @@ components:
           readOnly: true
         refresh:
           type: string
-          writeOnly: true
       required:
       - access
       - refresh
