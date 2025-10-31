@@ -10,12 +10,12 @@ User = get_user_model()
 
 class MessageSerializer(serializers.ModelSerializer):
     sender = UserSerializer(read_only=True)
-    room = serializers.PrimaryKeyRelatedField(queryset=Room.objects.all(), required=True)
+    # room = serializers.PrimaryKeyRelatedField(queryset=Room.objects.all()) is get from nested url
 
     class Meta:
         model = Message
         fields = ['id', 'room', 'sender', 'content', 'edited', 'deleted_at', 'created', 'modified']
-        read_only_fields = ['id', 'sender', 'edited', 'deleted_at', 'created', 'modified']
+        read_only_fields = ['id', 'sender', 'room', 'edited', 'deleted_at', 'created', 'modified']
 
     def create(self, validated_data):
         """
