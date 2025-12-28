@@ -7,7 +7,7 @@ class Room(BaseModel):
     name = models.CharField(max_length=255)
     is_group = models.BooleanField(default=False)
     members = models.ManyToManyField(User, related_name='rooms')
-
-def __str__(self):
-    return self.name
+    
+    def __str__(self):
+        return self.name
 
